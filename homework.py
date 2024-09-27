@@ -16,6 +16,22 @@ class Student:
         else:
              return 'Ошибка'
 
+    def __str__(self):
+        return  (f'Имя: {self.name}\n'
+                 f'Фамилия: {self.surname}\n'
+                 f'Средняя оценка за домашние задания: {self.calculate_grades()}\n'
+                 f'Курсы в процессе изучения: {". ".join(self.courses_in_progress)}\n'
+                 f'Завершенные курсы: {". ".join(self.finished_courses)}\n')
+
+
+    def calculate_grades(self):
+        grades = sum(sum(grades) for grades in self.grades.values())
+        count_ = sum(len(grades) for grades in self.grades.values())
+        return round(grades / count_, 2)
+
+    def __eq__(self, other):
+        return self.calculate_grades() == other.calculate_grades()
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -26,6 +42,19 @@ class Lecture(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
+
+    def __str__(self):
+        return (f'Имя: {self.name}\n'
+                f'Фамилия: {self.surname}\n'
+                f'Средняя оценка за лекции: {self.calculate_grades()}\n')
+
+    def calculate_grades(self):
+        grades = sum(sum(grades) for grades in self.grades.values())
+        count_ = sum(len(grades) for grades in self.grades.values())
+        return round(grades / count_, 2)
+
+    def __eq__(self, other):
+        return self.calculate_grades() == other.calculate_grades()
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -39,3 +68,7 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+
+    def __str__(self):
+        return (f'Имя: {self.name}\n'
+                f'Фамилия: {self.surname}\n')
