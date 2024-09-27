@@ -21,3 +21,11 @@ class Mentor:
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+
+class Lecture(Mentor):
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
+
+class Reviewer(Mentor):
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
