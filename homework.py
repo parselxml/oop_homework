@@ -20,8 +20,8 @@ class Student:
         return  (f'Имя: {self.name}\n'
                  f'Фамилия: {self.surname}\n'
                  f'Средняя оценка за домашние задания: {self.calculate_grades()}\n'
-                 f'Курсы в процессе изучения: {". ".join(self.courses_in_progress)}\n'
-                 f'Завершенные курсы: {". ".join(self.finished_courses)}\n')
+                 f'Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n'
+                 f'Завершенные курсы: {", ".join(self.finished_courses)}\n')
 
 
     def calculate_grades(self):
@@ -72,3 +72,54 @@ class Reviewer(Mentor):
     def __str__(self):
         return (f'Имя: {self.name}\n'
                 f'Фамилия: {self.surname}\n')
+
+super_lecture1 = Lecture('Анна', 'Петрова')
+super_lecture1.courses_attached += ['Python']
+super_lecture2 = Lecture('Максим', 'Иванов')
+super_lecture2.courses_attached += ['Python']
+
+best_student1 = Student('Светлана', 'Сидорова', 'your_gender')
+best_student1.courses_in_progress += ['Python', 'Git']
+best_student1.finished_courses += ['Введение в программирование']
+best_student2 = Student('Алексей', 'Кузнецов', 'your_gender')
+best_student2.courses_in_progress += ['Python', 'Discord']
+best_student1.finished_courses += ['Введение в программирование']
+
+best_student1.rate_lecture(super_lecture1, 'Python', 10)
+best_student1.rate_lecture(super_lecture2, 'Python', 9)
+best_student1.rate_lecture(super_lecture2, 'Python', 10)
+
+cool_mentor1 = Reviewer('Ольга', 'Смирнова')
+cool_mentor1.courses_attached += ['Python']
+cool_mentor2 = Reviewer('Дмитрий', 'Федоров')
+cool_mentor2.courses_attached += ['Python']
+
+cool_mentor1.rate_hw(best_student1, 'Python', 10)
+cool_mentor1.rate_hw(best_student2, 'Python', 10)
+cool_mentor1.rate_hw(best_student2, 'Python', 8)
+
+def avg_grades_hw(students: list, course: str):
+    avg_grades = 0
+    for student in students:
+        if course in student.courses_in_progress:
+            avg_grades += student.calculate_grades()
+    return avg_grades / len(students)
+
+
+def avg_grades_lecture(lectures: list, course: str):
+    avg_grades = 0
+    for lecture in lectures:
+        if course in lecture.courses_attached:
+            avg_grades += lecture.calculate_grades()
+    return avg_grades / len(lectures)
+
+print(best_student1)
+print(best_student2)
+print(super_lecture1)
+print(super_lecture2)
+print(cool_mentor1)
+print(cool_mentor2)
+print(super_lecture1 == super_lecture2)
+print(best_student1 == best_student2)
+print(avg_grades_hw([best_student1, best_student2], 'Python'))
+print(avg_grades_lecture([super_lecture1, super_lecture2], 'Python'))
